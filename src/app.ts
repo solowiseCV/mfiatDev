@@ -42,6 +42,16 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.get('/api-docs.json', (_req, res) => res.json(swaggerSpec))
 
+
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'API is running successfully 🚀',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+
 app.get('/health', (_req, res) => {
   res.json({
     success: true,
@@ -50,10 +60,24 @@ app.get('/health', (_req, res) => {
     timestamp: new Date().toISOString(),
   })
 })
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'API is running successfully 🚀',
+    timestamp: new Date().toISOString(),
+  });
+});
 
 app.use('/api/v1/auth', agentRoutes)
 app.use('/api/v1/kyc', kycRoutes)
 app.use('/api/v1/notifications', notificationRoutes)
+
+app.use((_req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found',
+  });
+});
 
 app.use(notFoundMiddleware)
 app.use(errorMiddleware)
