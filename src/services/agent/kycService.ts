@@ -1,6 +1,6 @@
-import prisma from '../../lib/prisma'
+import { KycStatus } from "../../generated/prisma/enums";
+import prisma from "../../lib/prisma";
 import { BadRequestError, NotFoundError } from '../../types'
-import { KycStatus } from '@prisma/client'
 import { SubmitKycDto, ReviewKycDto } from '../../types/kyc/kyc'
 import { enqueueKycReviewJob } from '../../utils/jobQueue'
 
