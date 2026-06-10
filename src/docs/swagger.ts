@@ -202,6 +202,32 @@ const swaggerDefinition = {
           message: { type: 'string' },
         },
       },
+      CurrencyConvertResponse: {
+        type: 'object',
+        properties: {
+          from: { type: 'string' },
+          to: { type: 'string' },
+          amount: { type: 'number' },
+          exchangeRate: { type: 'number' },
+          conversionFee: { type: 'number' },
+          conversionFeePercent: { type: 'number' },
+          convertedAmount: { type: 'number' },
+          amountAfterFee: { type: 'number' },
+          rateDate: { type: 'string' },
+          deliveryTime: { type: 'string' },
+        },
+      },
+      CurrencyRatesResponse: {
+        type: 'object',
+        properties: {
+          base: { type: 'string' },
+          date: { type: 'string' },
+          rates: {
+            type: 'object',
+            additionalProperties: { type: 'number' },
+          },
+        },
+      },
     },
   },
   paths: {
@@ -657,6 +683,69 @@ const swaggerDefinition = {
                       type: 'object',
                       properties: {
                         data: { $ref: '#/components/schemas/NotificationMessageResponse' },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/currency/convert': {
+      get: {
+        tags: ['Currency'],
+        summary: 'Convert an amount between two currencies',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: 'from', in: 'query', required: true, schema: { type: 'string' }, example: 'GBP' },
+          { name: 'to', in: 'query', required: true, schema: { type: 'string' }, example: 'NGN' },
+          { name: 'amount', in: 'query', required: true, schema: { type: 'number' }, example: 10000 },
+        ],
+        responses: {
+          '200': {
+            description: 'Currency conversion returned successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  allOf: [
+                    { $ref: '#/components/schemas/ApiResponse' },
+                    {
+                      type: 'object',
+                      properties: {
+                        data: { $ref: '#/components/schemas/CurrencyConvertResponse' },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/currency/rates': {
+      get: {
+        tags: ['Currency'],
+        summary: 'Get exchange rates for one or more currencies',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: 'base', in: 'query', required: true, schema: { type: 'string' }, example: 'USD' },
+          { name: 'symbols', in: 'query', required: true, schema: { type: 'string' }, example: 'NGN,GHS,KES' },
+        ],
+        responses: {
+          '200': {
+            description: 'Currency rates returned successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  allOf: [
+                    { $ref: '#/components/schemas/ApiResponse' },
+                    {
+                      type: 'object',
+                      properties: {
+                        data: { $ref: '#/components/schemas/CurrencyRatesResponse' },
                       },
                     },
                   ],

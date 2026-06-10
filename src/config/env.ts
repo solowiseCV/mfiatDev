@@ -39,4 +39,6 @@ export const env = {
   BASE_URL: process.env.BASE_URL || '',
   BASE_URL_RENDER: process.env.BASE_URL_RENDER || '',
   BACKEND_URL: process.env.BACKEND_URL || '',
+  CURRENCYFREAKS_API_KEY: process.env.CURRENCYFREAKS_API_KEY || '',
+  CONVERSION_FEE_PERCENT: parseFloat(process.env.CONVERSION_FEE_PERCENT || '0.007'),
 }

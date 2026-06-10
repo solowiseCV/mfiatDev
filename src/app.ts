@@ -9,6 +9,7 @@ import { errorMiddleware, notFoundMiddleware } from './middlewares/error.middlew
 import agentRoutes from './routes/agent/authRoute'
 import kycRoutes from './routes/agent/kycRoute'
 import notificationRoutes from './routes/agent/notificationRoute'
+import currencyRoutes from './routes/currencyRoute'
 
 const app = express()
 
@@ -71,6 +72,7 @@ app.get('/', (_req, res) => {
 app.use('/api/v1/auth', agentRoutes)
 app.use('/api/v1/kyc', kycRoutes)
 app.use('/api/v1/notifications', notificationRoutes)
+app.use('/api/v1/currency', currencyRoutes) 
 
 app.use((_req, res) => {
   res.status(404).json({

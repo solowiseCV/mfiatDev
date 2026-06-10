@@ -365,6 +365,8 @@ export const logout = async (sessionId: string) => {
   });
 };
 
+
+
 export const getProfile = async (agentId: string) => {
   const agent = await prisma.agent.findUnique({
     where: { id: agentId },
